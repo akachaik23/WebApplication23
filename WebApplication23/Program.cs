@@ -1,3 +1,4 @@
+using Application;
 using Application.Features.Products.Queries;
 using MyInfrastructure;
 using System.Runtime.CompilerServices;
@@ -23,8 +24,7 @@ builder.Services.AddMyService();
 //builder.Services.AddScope
 
 builder.Services.AddInfrastructure();
-
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblies(typeof(Program).Assembly, typeof(GetProductsQuery).Assembly));
+builder.Services.AddApplication();
 
 var app = builder.Build();
 
