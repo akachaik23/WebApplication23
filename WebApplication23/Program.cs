@@ -3,6 +3,8 @@ using MyInfrastructure;
 using System.Runtime.CompilerServices;
 using WebApplication23.Controllers;
 
+// Hi, Teacher Yee.
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
