@@ -12,22 +12,28 @@ namespace Application.Features.Products.Queries;
 
 // pattern:  cqrs Comamand Query Responsibility Segregation
 // library : MediatR
-public class GetProductsQuery : IRequest<List<Product>>
+public class GetProductQuery : IRequest<List<Product>>
 {
-    //public int Id { get; set; }
+    public int Id { get; set; }
 }
 
 
-public class GetProductsHandler : IRequestHandler<GetProductsQuery, List<Product>>
+public class GetProductsHandler : IRequestHandler<GetProductQuery, List<Product>>
 {
     private readonly IProductRepository _productRepository;
     public GetProductsHandler(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
-    public Task<List<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public Task<List<Product>> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var products = _productRepository.GetProducts();
+        
+        int id = request.Id;
+        var products = _productRepository.GetProducts();        
+        if (id > 0)
+        {
+            products = products.Where(p => p.Id == id).ToList();
+        }
         return Task.FromResult(products);
     }
 }

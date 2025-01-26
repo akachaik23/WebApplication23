@@ -26,14 +26,16 @@ public class ProductsController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetProduct(int id)
     {
-        return Ok();
+        var query = new GetProductQuery { Id = id };
+        var product = _mediator.Send(query);
+        return Ok(product);
     }
 
     // Read
     [HttpGet]
     public async Task<IActionResult> GetProducts()
     {
-        var products = await _mediator.Send(new GetProductsQuery());
+        var products = await _mediator.Send(new GetProductQuery());
         return Ok(products);
     }
 
