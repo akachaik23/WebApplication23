@@ -1,4 +1,6 @@
-﻿using Application.Features.Products.Queries;
+﻿using Application.Features.Products.Commands.Update;
+using Application.Features.Products.Commands.Delete;
+using Application.Features.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +45,8 @@ public class ProductsController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateProduct(int id)
     {
+        var query = new UpdateProductQuery { Id = id };
+        var result = _mediator.Send(query);
         return Ok();
     }
 
@@ -50,6 +54,8 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteProduct(int id)
     {
+        var query = new DeleteProductQuery { Id = id };
+        var result = _mediator.Send(query);
         return Ok();
     }
 }

@@ -9,6 +9,8 @@ namespace Domain.Repositories;
 
 public interface IProductRepository
 {
+    bool DeleteProduct(int id);
+    List<Product> GetProduct(int id);
     List<Product> GetProducts();
-
+    bool UpdateProduct(int id);
 }

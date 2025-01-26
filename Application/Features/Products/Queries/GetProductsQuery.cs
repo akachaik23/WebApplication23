@@ -29,10 +29,13 @@ public class GetProductsHandler : IRequestHandler<GetProductQuery, List<Product>
     {
         
         int id = request.Id;
-        var products = _productRepository.GetProducts();        
+        var products = new List<Product>();
         if (id > 0)
         {
-            products = products.Where(p => p.Id == id).ToList();
+            products = _productRepository.GetProduct(id); products.Where(p => p.Id == id).ToList();
+        }
+        else {
+            products = _productRepository.GetProducts();
         }
         return Task.FromResult(products);
     }
