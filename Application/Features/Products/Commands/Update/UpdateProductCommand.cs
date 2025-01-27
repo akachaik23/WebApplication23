@@ -11,21 +11,21 @@ using System.Threading.Tasks;
 namespace Application.Features.Products.Commands.Update
 {
 
-    public class DeleteProductQuery : IRequest<bool>
+    public class UpdateProductQuery : IRequest<bool>
     {
         public int Id { get; set; }
     }
 
-    public class DeleteProductHandler : IRequestHandler<DeleteProductQuery, bool>
+    public class UpdateProductHandler : IRequestHandler<UpdateProductQuery, bool>
     {
         private readonly IProductRepository _productRepository;
-        public DeleteProductHandler(IProductRepository productRepository)
+        public UpdateProductHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
-        public Task<bool> Handle(DeleteProductQuery request, CancellationToken cancellationToken)
+        public Task<bool> Handle(UpdateProductQuery request, CancellationToken cancellationToken)
         {
-            bool result = _productRepository.DeleteProduct(request.Id);
+            bool result = _productRepository.UpdateProduct(request.Id);
             return Task.FromResult(true);
         }
     }
