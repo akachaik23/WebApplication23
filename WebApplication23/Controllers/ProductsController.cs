@@ -43,10 +43,20 @@ public class ProductsController : ControllerBase
 
     // Update
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
+    public async Task<IActionResult> UpdateProduct(UpdateProductDto product, int id)
     {
-        var query = new UpdateProductQuery { UpdateProductDto = product };
+        if (product.Id != id)
+        {
+            return BadRequest("Invalid id");
+        }
+
+        var query = new UpdateProductQuery
+        {
+            UpdateProductDto = product
+        };
+
         var result = await _mediator.Send(query);
+        
         return Ok(result);
     }
 
