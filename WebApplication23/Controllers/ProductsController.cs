@@ -43,11 +43,11 @@ public class ProductsController : ControllerBase
 
     // Update
     [HttpPut("{id}")]
-    public IActionResult UpdateProduct(int id)
+    public async Task<IActionResult> UpdateProduct(UpdateProductDto product)
     {
-        var query = new UpdateProductQuery { Id = id };
-        var result = _mediator.Send(query);
-        return Ok();
+        var query = new UpdateProductQuery { UpdateProductDto = product };
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 
     // Delete

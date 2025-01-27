@@ -10,25 +10,35 @@ namespace MyInfrastructure.Repositories;
 
 public class InMemoryProductRepository : IProductRepository
 {
-    private List<Product> Products { get; set; }
+    private static readonly List<Product> _products = new List<Product>
+    {
+        new Product { Id = 1, Name = "Product 1", Description = "Description 1", Price = 100.0 },
+        new Product { Id = 2, Name = "Product 2", Description = "Description 2", Price = 200.0 },
+        new Product { Id = 3, Name = "Product 3", Description = "Description 3", Price = 300.0 },
+        new Product { Id = 4, Name = "Product 4", Description = "Description 4", Price = 400.0 },
+        new Product { Id = 5, Name = "Product 5", Description = "Description 5", Price = 500.0 }
+    };
 
     public InMemoryProductRepository()
     {
-        Products = new List<Product> {
-            new Product { Id = 1, Name = "Product 1", Description = "Description 1", Price = 100.0 },
-            new Product { Id = 2, Name = "Product 2", Description = "Description 2", Price = 200.0 },
-            new Product { Id = 3, Name = "Product 3", Description = "Description 3", Price = 300.0 },
-            new Product { Id = 4, Name = "Product 4", Description = "Description 4", Price = 400.0 },
-            new Product { Id = 5, Name = "Product 5", Description = "Description 5", Price = 500.0 }
-        };
+        //Products = new List<Product> {
+        //    new Product { Id = 1, Name = "Product 1", Description = "Description 1", Price = 100.0 },
+        //    new Product { Id = 2, Name = "Product 2", Description = "Description 2", Price = 200.0 },
+        //    new Product { Id = 3, Name = "Product 3", Description = "Description 3", Price = 300.0 },
+        //    new Product { Id = 4, Name = "Product 4", Description = "Description 4", Price = 400.0 },
+        //    new Product { Id = 5, Name = "Product 5", Description = "Description 5", Price = 500.0 }
+        //};
     }
-    public List<Product> GetProducts()    {
-        return this.Products;
+    public List<Product> GetProducts()
+    {
+        // _products.Add(new Product { Id = 6, Name = "Product 6", Description = "Description 6", Price = 600.0 });
+
+        return _products;
     }
 
     public List<Product> GetProduct(int id)
     {
-        var product = this.Products.Where(p => p.Id == id).ToList();
+        var product = _products.Where(p => p.Id == id).ToList();
         return product;
     }
 
@@ -36,7 +46,7 @@ public class InMemoryProductRepository : IProductRepository
     {
         bool result = false;
 
-        var product = this.Products.Where(p => p.Id == id).ToList();
+        var product = _products.Where(p => p.Id == id).ToList();
         if (product.Count > 0)
         {
             product[0].Name = "Updated Product";
@@ -51,13 +61,29 @@ public class InMemoryProductRepository : IProductRepository
     {
         bool result = false;
 
-        var product = this.Products.Where(p => p.Id == id).ToList();
+        var product = _products.Where(p => p.Id == id).ToList();
         if (product.Count > 0)
         {
-            this.Products.Remove(product[0]);
+            _products.Remove(product[0]);
             result = true;
         }
 
         return result;
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        var productToUpdate = _products.Find(p => p.Id == product.Id);
+
+        if (productToUpdate is null)
+        {
+            return;
+        }
+
+        productToUpdate.Name = product.Name;
+        productToUpdate.Description = product.Description;
+        productToUpdate.Price = product.Price;
+
+
     }
 }

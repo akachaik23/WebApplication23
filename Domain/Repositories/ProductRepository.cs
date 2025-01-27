@@ -12,5 +12,7 @@ public interface IProductRepository
     bool DeleteProduct(int id);
     List<Product> GetProduct(int id);
     List<Product> GetProducts();
-    bool UpdateProduct(int id);
+    void UpdateProduct(Product product);
+
+    //void UpdateProduct(Product product);
 }

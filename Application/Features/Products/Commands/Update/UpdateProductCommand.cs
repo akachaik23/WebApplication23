@@ -8,25 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Products.Commands.Update
+namespace Application.Features.Products.Commands.Update;
+
+
+public class UpdateProductQuery : IRequest<bool>
 {
+    public UpdateProductDto UpdateProductDto { get; set; } = new UpdateProductDto();
+}
 
-    public class UpdateProductQuery : IRequest<bool>
+public class UpdateProductDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+}
+public class UpdateProductHandler : IRequestHandler<UpdateProductQuery, bool>
+{
+    private readonly IProductRepository _productRepository;
+    public UpdateProductHandler(IProductRepository productRepository)
     {
-        public int Id { get; set; }
+        _productRepository = productRepository;
     }
-
-    public class UpdateProductHandler : IRequestHandler<UpdateProductQuery, bool>
+    public Task<bool> Handle(UpdateProductQuery request, CancellationToken cancellationToken)
     {
-        private readonly IProductRepository _productRepository;
-        public UpdateProductHandler(IProductRepository productRepository)
+        var product = new Product
         {
-            _productRepository = productRepository;
-        }
-        public Task<bool> Handle(UpdateProductQuery request, CancellationToken cancellationToken)
-        {
-            bool result = _productRepository.UpdateProduct(request.Id);
-            return Task.FromResult(true);
-        }
+            Id = request.UpdateProductDto.Id,
+            Name = request.UpdateProductDto.Name,
+            Description = request.UpdateProductDto.Description
+        };
+
+        _productRepository.UpdateProduct(product);
+
+        return Task.FromResult(true);
     }
 }

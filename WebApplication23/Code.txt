@@ -1,0 +1,40 @@
+﻿
+public class Product {
+	public string Name { get; set; }
+		public string Description { get; set; }
+	public static string [] Names = new string [] { "a", "b" }; 
+	
+	public static string From (Product product)
+}
+
+public class ProductDto 
+{
+	public string Description { get; set; }
+	
+	public static ProductDto From(Product product) 
+	{
+		return new ProductDto {
+			Description = product.Description,
+			Name = product.Name
+		}
+	}
+}
+var p1 = new Product();
+var p2 = new Product();
+
+Product.From(product);
+
+
+var producDto1 = new ProductDto {
+	Description = product.Description,
+	Name = product.Name
+}
+
+
+
+var producDto2 = new ProductDto {
+	Description = product.Description,
+	Name = product.Name
+}
+
+var producDto3 = ProductDto.From(product);
