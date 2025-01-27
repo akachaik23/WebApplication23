@@ -25,7 +25,8 @@ var p2 = new Product();
 Product.From(product);
 
 
-var producDto1 = new ProductDto {
+var producDto1 = new ProductDto 
+{
 	Description = product.Description,
 	Name = product.Name
 }
