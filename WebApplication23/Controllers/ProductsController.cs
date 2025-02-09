@@ -66,6 +66,12 @@ public class ProductsController : ControllerBase
     {
         var query = new DeleteProductQuery { Id = id };
         var result = _mediator.Send(query);
-        return Ok();
+
+        if (!result.Result)
+        {
+            return NotFound(new { message = "Product not found" });
+        }
+
+        return Ok(new { message = "Product deleted successfully" });
     }
 }

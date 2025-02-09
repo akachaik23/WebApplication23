@@ -26,7 +26,7 @@ namespace Application.Features.Products.Commands.Delete
         public Task<bool> Handle(DeleteProductQuery request, CancellationToken cancellationToken)
         {
             bool result = _productRepository.DeleteProduct(request.Id);
-            return Task.FromResult(true);
+            return Task.FromResult(result);
         }
     }
 }

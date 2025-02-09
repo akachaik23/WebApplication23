@@ -59,16 +59,14 @@ public class InMemoryProductRepository : IProductRepository
 
     public bool DeleteProduct(int id)
     {
-        bool result = false;
-
         var product = _products.Where(p => p.Id == id).ToList();
-        if (product.Count > 0)
-        {
-            _products.Remove(product[0]);
-            result = true;
-        }
 
-        return result;
+        if (product.Count < 1)
+            return false;
+
+        _products.Remove(product[0]);
+
+        return true;
     }
 
     public void UpdateProduct(Product product)
